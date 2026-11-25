@@ -80,7 +80,11 @@
   #stage { position: absolute; inset: 0; }
   .slide { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 22px 48px; opacity: 0; transition: opacity 1s ease; pointer-events: none; }
   .slide.active { opacity: 1; }
-  .slide .bg { position: absolute; inset: -12%; z-index: -1; background: center / cover no-repeat; filter: blur(36px) brightness(.4) saturate(1.2); }
+    #bgstack { position: absolute; inset: 0; overflow: hidden; }
+  .bgl { position: absolute; inset: -12%; background: center / cover no-repeat; filter: blur(36px) brightness(.4) saturate(1.2); opacity: 0; transition: opacity 1s ease; }
+  .bgl.active { opacity: 1; }
+  .bgvideo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; mix-blend-mode: screen; pointer-events: none; transition: opacity 2.5s ease; -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 12%, #000 30%); mask-image: linear-gradient(to bottom, transparent 0, transparent 12%, #000 30%); }
+  .story.show .bgvideo { opacity: .075; }
   .slide .frame { margin: 0; background: var(--paper); padding: 10px 10px 16px; border-radius: 4px; box-shadow: 0 24px 60px rgba(0,0,0,.6); transform: translateY(24px) rotate(var(--r, -1.2deg)) scale(.95); transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
   .slide.active .frame { transform: rotate(var(--r, -1.2deg)); }
   .slide .ph { overflow: hidden; border-radius: 2px; background: #e6d6c0; }
@@ -228,6 +232,8 @@
 <section class="story" id="story" aria-label="Для Айганым">
   <div class="viewer" id="viewer">
     <div class="top"><div class="bar"><i id="barFill"></i></div><span class="count" id="count"></span></div>
+    <div id="bgstack"></div>
+    <video class="bgvideo" id="bgVideo" src="assets/bg3.mp4" muted loop playsinline preload="auto" aria-hidden="true"></video>
     <div id="stage"></div>
     <div class="tap-hint" id="tapHint">нажимай или смахивай, чтобы листать</div>
   </div>
@@ -326,7 +332,11 @@
   SLIDES.push({ finale: true });
 
   const stage = $('stage'), viewer = $('viewer'), barFill = $('barFill'), countEl = $('count'), tapHint = $('tapHint');
+  const bgStack = $('bgstack'), bgs = [];
   const els = SLIDES.map((m, i) => {
+    const bg = document.createElement('div'); bg.className = 'bgl';
+    if (m.photo) bg.style.backgroundImage = 'url(' + m.photo + ')';
+    bgStack.appendChild(bg); bgs.push(bg);
     const el = document.createElement('div');
     el.className = 'slide';
     if (m.finale) {
@@ -334,8 +344,7 @@
       el.innerHTML = '<svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.700 1.100 5.600 3.300C13.900 6.100 15.600 5 17.600 5 21 5 23.100 8.400 21.600 11.800 19.500 16.400 12 21 12 21z"/></svg><p>Спасибо, что ты есть.</p><small>Твой Ruslan</small><button class="again" type="button">Посмотреть ещё раз</button>';
       el.querySelector('.again').addEventListener('click', () => goTo(0));
     } else {
-      el.innerHTML = '<div class="bg"></div><figure class="frame"><div class="ph"><img alt="Айганым"></div></figure><p class="cap"></p>';
-      el.querySelector('.bg').style.backgroundImage = 'url(' + m.photo + ')';
+      el.innerHTML = '<figure class="frame"><div class="ph"><img alt="Айганым"></div></figure><p class="cap"></p>';
       el.querySelector('img').src = m.photo;
       el.querySelector('.cap').textContent = m.text;
       el.querySelector('.frame').style.setProperty('--r', ((i % 3) - 1) * 1.3 + 'deg');
@@ -350,6 +359,7 @@
     i = Math.max(0, Math.min(SLIDES.length - 1, i));
     if (i === idx) return;
     els.forEach((e, k) => e.classList.toggle('active', k === i));
+    bgs.forEach((b, k) => b.classList.toggle('active', k === i));
     idx = i;
     const fin = !!SLIDES[i].finale;
     barFill.style.width = fin ? '100%' : ((i + 1) / (SLIDES.length - 1) * 100) + '%';
@@ -362,6 +372,7 @@
     clearTimeout(startViewer.t);
     startViewer.t = setTimeout(() => tapHint.classList.add('hide'), 6000);
     goTo(0);
+    const bv = $('bgVideo'); bv.currentTime = 0; bv.play().catch(() => {});
   }
 
   /* листает она сама: нажатие справа/слева или свайп */
