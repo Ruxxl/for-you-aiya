@@ -107,12 +107,8 @@
   /* ---------- экран блокировки + звонок ---------- */
   .phone { position: fixed; inset: 0; z-index: 5; background: #000; display: flex; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 1.2s ease; }
   .phone.show { opacity: 1; pointer-events: auto; }
-  .lock { --vh: 100vh; --sw: max(100cqw, calc(var(--vh) * 589 / 1280)); --sh: calc(var(--sw) * 1280 / 589); container-type: inline-size; position: relative; width: 100%; max-width: 480px; height: 100%; background: #000; overflow: hidden; }
-  @supports (height: 100dvh) { .lock { --vh: 100dvh; } }
-  .scr { position: absolute; left: 50%; top: 0; width: var(--sw); height: var(--sh); transform: translateX(-50%); background: center top / 100% 100% no-repeat; }
-  .scr.lockimg { background-image: url(assets/lockscreen.jpg); }
-  .scr.homeimg { background-image: url(assets/home.jpg); }
-  .banner { position: absolute; left: 3%; right: 3%; top: calc(var(--sh) * .046); display: flex; align-items: center; gap: 3.2cqw; padding: 0 3.6cqw; height: 25.8cqw; border-radius: 3.9cqw; background: #5e5e5e; box-shadow: 0 6px 20px rgba(0,0,0,.3); transform: translateY(-160%); transition: transform .7s cubic-bezier(.2,1.2,.3,1); }
+  .lock { container-type: inline-size; position: relative; height: 100%; aspect-ratio: 589 / 1280; max-width: 100%; background: url(assets/lockscreen.jpg) center / cover no-repeat; overflow: hidden; }
+  .banner { position: absolute; left: 3%; right: 3%; top: 4.6%; display: flex; align-items: center; gap: 3.2cqw; padding: 0 3.6cqw; height: 25.8cqw; border-radius: 3.9cqw; background: #5e5e5e; box-shadow: 0 6px 20px rgba(0,0,0,.3); transform: translateY(-160%); transition: transform .7s cubic-bezier(.2,1.2,.3,1); }
   .banner.in { transform: none; }
   .banner.ring { animation: shake .9s ease-in-out infinite; }
   .avatar { flex: none; width: 13cqw; aspect-ratio: 1; border-radius: 50%; background: url(assets/ruslan.webp) 0% 18% / 270% no-repeat; box-shadow: 0 0 0 .3cqw rgba(255,255,255,.15); }
@@ -132,15 +128,15 @@
   .call-note.show { opacity: 1; }
 
   /* ---------- главный экран и приложение «Фото» ---------- */
-  .homescreen { position: absolute; inset: 0; z-index: 1; opacity: 0; pointer-events: none; transition: opacity 1s ease; }
+  .homescreen { position: absolute; inset: 0; z-index: 1; background: url(assets/home.jpg) center / cover no-repeat; opacity: 0; pointer-events: none; transition: opacity 1s ease; }
   .homescreen.show { opacity: 1; pointer-events: auto; }
   .app-photos { position: absolute; left: 53.8%; top: 44%; width: 15.3%; border: 0; background: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; color: #fff; transition: transform .15s ease; }
   .app-photos:active { transform: scale(.92); }
   .app-photos .ico { position: relative; width: 100%; aspect-ratio: 1; border-radius: 22.5%; overflow: visible; }
   .app-photos .ico { animation: hop 1.8s ease-in-out infinite; }
   .app-photos .ico img { display: block; width: 100%; height: 100%; -webkit-user-drag: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,.25)); }
-  .app-photos .ico::after { content: ""; position: absolute; inset: -5%; border-radius: 26%; border: calc(var(--sw) * .005) solid rgba(255,255,255,.85); animation: ring 1.8s ease-out infinite; }
-  .app-photos .lbl { margin-top: calc(var(--sw) * .019); font: 400 calc(var(--sw) * .029) system-ui, -apple-system, "SF Pro Text", sans-serif; text-shadow: 0 1px 2px rgba(0,0,0,.35); white-space: nowrap; }
+  .app-photos .ico::after { content: ""; position: absolute; inset: -5%; border-radius: 26%; border: .5cqw solid rgba(255,255,255,.85); animation: ring 1.8s ease-out infinite; }
+  .app-photos .lbl { margin-top: 1.9cqw; font: 400 2.9cqw system-ui, -apple-system, "SF Pro Text", sans-serif; text-shadow: 0 1px 2px rgba(0,0,0,.35); white-space: nowrap; }
 
   /* ---------- идёт разговор ---------- */
   .incall { position: absolute; inset: 0; z-index: 2; isolation: isolate; display: flex; flex-direction: column; align-items: center; padding: 20cqw 0 13cqw; color: #fff; font-family: system-ui, -apple-system, "SF Pro Text", sans-serif; opacity: 0; pointer-events: none; transition: opacity .9s ease; overflow: hidden; }
@@ -168,16 +164,6 @@
   @keyframes pulse { 50% { transform: translate(-50%, -50%) scale(1.07); } }
   @keyframes ring { 0% { transform: scale(.9); opacity: .8; } 100% { transform: scale(1.5); opacity: 0; } }
   @keyframes blink { 50% { opacity: .45; } }
-  @media (max-height: 740px) {
-    .incall { padding-top: 12cqw; padding-bottom: 8cqw; }
-    .incall .ava { width: 18cqw; margin-bottom: 3cqw; }
-    .incall .name { font-size: 7.4cqw; }
-    .incall .timer { font-size: 4.8cqw; }
-    .incall .grid { gap: 4cqw 7cqw; grid-template-columns: repeat(3, 18cqw); }
-    .incall .ctl { font-size: 3.4cqw; gap: 1.8cqw; }
-    .incall .ctl i, .incall .end { width: 18cqw; }
-    .incall .end { margin-top: 7cqw; }
-  }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>
 </head>
@@ -208,7 +194,6 @@
 
 <section class="phone" id="phone" aria-live="polite">
   <div class="lock">
-    <div class="scr lockimg"></div>
     <div class="banner" id="banner">
       <div class="avatar" role="img" aria-label="Фото Ruslan"></div>
       <div class="caller"><b>Ruslan</b><span>мобильный</span></div>
@@ -218,12 +203,12 @@
       </div>
     </div>
     <div class="call-note" id="callNote"></div>
-    <div class="homescreen" id="home"><div class="scr homeimg">
+    <div class="homescreen" id="home">
       <button class="app-photos" id="photosApp" type="button" aria-label="Открыть Фото">
         <span class="ico"><img src="assets/photos-icon.png" alt="" draggable="false"></span>
         <span class="lbl">Фото</span>
       </button>
-    </div></div>
+    </div>
     <div class="incall" id="incall" role="group" aria-label="Идёт разговор">
       <div class="clip" id="clip" aria-hidden="true"><video id="clipVideo" src="assets/video2.mp4" muted playsinline preload="auto"></video></div>
       <div class="who">
