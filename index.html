@@ -118,9 +118,9 @@
   .homescreen.show { opacity: 1; pointer-events: auto; }
   .app-photos { position: absolute; left: 53.8%; top: 44%; width: 15.3%; border: 0; background: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; color: #fff; transition: transform .15s ease; }
   .app-photos:active { transform: scale(.92); }
-  .app-photos .ico { position: relative; width: 100%; aspect-ratio: 1; border-radius: 22.5%; overflow: visible; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+  .app-photos .ico { position: relative; width: 100%; aspect-ratio: 1; border-radius: 22.5%; overflow: visible; }
   .app-photos .ico { animation: hop 1.8s ease-in-out infinite; }
-  .app-photos .ico svg { display: block; width: 100%; height: 100%; border-radius: 22.5%; }
+  .app-photos .ico img { display: block; width: 100%; height: 100%; -webkit-user-drag: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,.25)); }
   .app-photos .ico::after { content: ""; position: absolute; inset: -5%; border-radius: 26%; border: .5cqw solid rgba(255,255,255,.85); animation: ring 1.8s ease-out infinite; }
   .app-photos .lbl { margin-top: 1.9cqw; font: 400 2.9cqw system-ui, -apple-system, "SF Pro Text", sans-serif; text-shadow: 0 1px 2px rgba(0,0,0,.35); white-space: nowrap; }
 
@@ -188,7 +188,7 @@
     <div class="call-note" id="callNote"></div>
     <div class="homescreen" id="home">
       <button class="app-photos" id="photosApp" type="button" aria-label="Открыть Фото">
-        <span class="ico"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8fa3"/><stop offset="1" stop-color="#d62b4a"/></linearGradient></defs><rect width="100" height="100" fill="url(#pg)"/><rect x="24" y="20" width="52" height="60" rx="5" fill="#fff6ec" transform="rotate(-5 50 50)"/><rect x="29" y="25" width="42" height="38" rx="3" fill="#f3c3cd" transform="rotate(-5 50 50)"/><path d="M50 56s-12-7-14-14c-1.3-4.5 2-8 6-8 3 0 5.3 1.6 8 5 2.7-3.4 5-5 8-5 4 0 7.300 3.500 6 8-2 7-14 14-14 14z" fill="#d62b4a" transform="translate(0 -3) rotate(-5 50 50)"/></svg></span>
+        <span class="ico"><img src="assets/photos-icon.png" alt="" draggable="false"></span>
         <span class="lbl">Фото</span>
       </button>
     </div>
