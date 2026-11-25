@@ -242,6 +242,7 @@
 <audio id="ringtone" src="assets/ringtone.mp3" loop preload="auto"></audio>
 <audio id="voice" src="assets/voice.mp3" preload="auto"></audio>
 <audio id="voice2" src="assets/voice2.mp3" preload="auto"></audio>
+<audio id="song" src="assets/song.mp3" loop preload="auto"></audio>
 
 <script>
   /* частицы-пыль на фоне */
@@ -373,6 +374,9 @@
     startViewer.t = setTimeout(() => tapHint.classList.add('hide'), 6000);
     goTo(0);
     const bv = $('bgVideo'); bv.currentTime = 0; bv.play().catch(() => {});
+    const song = $('song'); song.currentTime = 0; song.volume = 0; song.play().catch(() => {});
+    clearInterval(startViewer.f);
+    startViewer.f = setInterval(() => { song.volume = Math.min(.85, song.volume + .05); if (song.volume >= .85) clearInterval(startViewer.f); }, 150);
   }
 
   /* листает она сама: нажатие справа/слева или свайп */
