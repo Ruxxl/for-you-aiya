@@ -373,7 +373,7 @@
     clearTimeout(startViewer.t);
     startViewer.t = setTimeout(() => tapHint.classList.add('hide'), 6000);
     goTo(0);
-    const bv = $('bgVideo'); bv.currentTime = 0; bv.play().catch(() => {});
+    const bv = $('bgVideo'); bv.muted = true; bv.loop = true; bv.currentTime = 0; bv.play().catch(() => {});
     const song = $('song'); song.currentTime = 0; song.volume = 0; song.play().catch(() => {});
     clearInterval(startViewer.f);
     startViewer.f = setInterval(() => { song.volume = Math.min(.85, song.volume + .05); if (song.volume >= .85) clearInterval(startViewer.f); }, 150);
