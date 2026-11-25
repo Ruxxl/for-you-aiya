@@ -83,6 +83,22 @@
   .polaroid .ph.empty::after { content: "здесь будет фото"; font-family: "Marck Script", cursive; font-size: 24px; color: #8a6a5a; }
   .polaroid .ph.empty img { display: none; }
   .card p { margin-top: 22px; text-align: center; font-family: "Marck Script", cursive; font-size: clamp(26px, 7vw, 32px); line-height: 1.35; color: var(--cream); padding: 0 6px; }
+  .gallery-title { text-align: center; margin: 8px 0 36px; }
+  .gallery-title h3 { font-family: "Marck Script", cursive; font-weight: 400; font-size: clamp(30px, 8.5vw, 42px); line-height: 1.25; }
+  .gallery-title span { display: block; color: rgba(243,227,207,.6); font-size: 14px; margin-top: 6px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 16px; align-items: start; margin-bottom: 72px; }
+  .grid .tile:nth-child(odd) { margin-top: 0; }
+  .grid .tile.shift { margin-top: 30px; }
+  .tile { background: var(--paper); padding: 7px 7px 10px; border-radius: 3px; box-shadow: 0 10px 26px rgba(0,0,0,.5); opacity: 0; transform: translateY(26px) rotate(var(--r, 0deg)); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); cursor: zoom-in; border: 0; padding-bottom: 10px; }
+  .tile.in { opacity: 1; transform: rotate(var(--r, 0deg)); }
+  .tile img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 1px; background: #e6d6c0; }
+  .tile:active { transform: rotate(var(--r, 0deg)) scale(.97); }
+  .interlude { grid-column: 1 / -1; text-align: center; font-family: "Marck Script", cursive; font-size: clamp(24px, 6.8vw, 30px); line-height: 1.35; color: var(--cream); padding: 22px 8px; opacity: 0; transition: opacity 1.2s ease; }
+  .interlude.in { opacity: 1; }
+  .lightbox { position: fixed; inset: 0; z-index: 9; display: flex; align-items: center; justify-content: center; background: rgba(12,2,4,.92); opacity: 0; pointer-events: none; transition: opacity .35s ease; padding: 20px; cursor: zoom-out; }
+  .lightbox.show { opacity: 1; pointer-events: auto; }
+  .lightbox img { max-width: 100%; max-height: 100%; border-radius: 4px; box-shadow: 0 20px 60px rgba(0,0,0,.7); transform: scale(.94); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+  .lightbox.show img { transform: none; }
   .finale { text-align: center; padding-top: 16px; }
   .finale .heart { width: 54px; height: 54px; fill: #e8493f; animation: beat 1.6s ease-in-out infinite; }
   .finale p { font-family: "Marck Script", cursive; font-size: clamp(30px, 8vw, 40px); line-height: 1.35; margin: 18px 0 8px; }
@@ -221,6 +237,11 @@
     <p class="lead">Я не мастер говорить по телефону, поэтому собрал для тебя вот это. Листай вниз.</p>
     <span class="scroll-hint" aria-hidden="true">↓</span>
     <div id="cards"></div>
+    <div class="gallery-title">
+      <h3>А это всё ты</h3>
+      <span>нажми на фото, чтобы рассмотреть</span>
+    </div>
+    <div class="grid" id="grid"></div>
     <div class="finale card" id="finale">
       <svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.7 1.1 5.6 3.3C13.9 6.1 15.6 5 17.6 5 21 5 23.1 8.4 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>
       <p>Спасибо, что ты есть.</p>
@@ -228,6 +249,8 @@
     </div>
   </div>
 </section>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Фото крупно"><img id="lightboxImg" alt=""></div>
 
 <audio id="ringtone" src="assets/ringtone.mp3" loop preload="auto"></audio>
 <audio id="voice" src="assets/voice.mp3" preload="auto"></audio>
@@ -303,6 +326,29 @@
   });
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { root: $('story'), threshold: .25 });
   document.querySelectorAll('.card').forEach(c => io.observe(c));
+
+
+  /* СЕТКА ФОТО: файлы лежат в assets/aiya/01.jpg … 27.jpg. Три из них уже есть в больших карточках выше */
+  const SKIP = new Set([8, 9, 10]);
+  const INTERLUDES = { 6: 'Ты красиво выглядишь в любой точке мира.', 14: 'И на море, и в горах, и просто в городе.', 21: 'Мне повезло смотреть на всё это вживую.' };
+  const gridEl = $('grid'), lb = $('lightbox'), lbImg = $('lightboxImg');
+  let shown = 0;
+  for (let n = 1; n <= 27; n++) {
+    if (SKIP.has(n)) continue;
+    if (INTERLUDES[shown]) { const t = document.createElement('div'); t.className = 'interlude'; t.textContent = INTERLUDES[shown]; gridEl.appendChild(t); }
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'tile' + (shown % 2 ? ' shift' : '');
+    b.style.setProperty('--r', ((shown * 7) % 5 - 2) * .9 + 'deg');
+    const f = 'assets/aiya/' + String(n).padStart(2, '0') + '.jpg';
+    b.innerHTML = '<img loading="lazy" alt="Айганым">';
+    b.firstChild.src = f;
+    b.onclick = () => { lbImg.src = f; lb.classList.add('show'); };
+    gridEl.appendChild(b);
+    shown++;
+  }
+  lb.onclick = () => lb.classList.remove('show');
+  addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('show'); });
+  document.querySelectorAll('.tile, .interlude').forEach(el => io.observe(el));
 
   /* разговор начался: реальный таймер */
   let t0 = 0, tick = null;
