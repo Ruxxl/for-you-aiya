@@ -68,41 +68,36 @@
   .ready:hover { transform: scale(1.05); background: var(--env-light); }
   .ready:active { transform: scale(.97); }
 
-  .story { position: fixed; inset: 0; z-index: 6; clip-path: circle(0 at var(--cx, 50%) var(--cy, 50%)); background: repeating-linear-gradient(115deg, rgba(255,255,255,.018) 0 2px, transparent 2px 7px), radial-gradient(ellipse at 50% 20%, #4a0a10 0%, var(--bg) 60%, #140204 100%); color: var(--cream); overflow-y: auto; overflow-x: hidden; opacity: 0; pointer-events: none; transition: clip-path 1s cubic-bezier(.3,.7,.2,1), opacity .5s ease; padding: 14vh 20px 18vh; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+  .story { position: fixed; inset: 0; z-index: 6; clip-path: circle(0 at var(--cx, 50%) var(--cy, 50%)); background: repeating-linear-gradient(115deg, rgba(255,255,255,.018) 0 2px, transparent 2px 7px), radial-gradient(ellipse at 50% 20%, #4a0a10 0%, var(--bg) 60%, #140204 100%); color: var(--cream); opacity: 0; pointer-events: none; transition: clip-path 1s cubic-bezier(.3,.7,.2,1), opacity .5s ease; }
   .story.show { opacity: 1; pointer-events: auto; clip-path: circle(150% at var(--cx, 50%) var(--cy, 50%)); }
-  .story .wrap { max-width: 400px; margin: 0 auto; }
-  .story h2 { font-family: "Marck Script", cursive; font-weight: 400; font-size: clamp(36px, 10vw, 52px); line-height: 1.2; text-align: center; margin-bottom: 8px; }
-  .story .lead { text-align: center; color: rgba(243,227,207,.7); font-size: 15px; line-height: 1.7; margin-bottom: 64px; }
-  .story .scroll-hint { display: block; text-align: center; font-family: "Marck Script", cursive; font-size: 20px; color: rgba(243,227,207,.6); margin: -40px 0 56px; animation: blink 2s ease-in-out infinite; }
-  .card { margin: 0 0 72px; opacity: 0; transform: translateY(36px) rotate(var(--r, 0deg)); transition: opacity 1s ease, transform 1s cubic-bezier(.2,.8,.2,1); }
-  .card.in { opacity: 1; transform: rotate(var(--r, 0deg)); }
-  .polaroid { background: var(--paper); padding: 12px 12px 18px; border-radius: 4px; box-shadow: 0 18px 44px rgba(0,0,0,.55); }
-  .polaroid .ph { position: relative; aspect-ratio: 4 / 5; background: #e6d6c0; overflow: hidden; border-radius: 2px; }
-  .polaroid img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .polaroid .ph.empty { display: grid; place-items: center; background: repeating-linear-gradient(135deg, #ead9c3 0 12px, #e3d0b8 12px 24px); }
-  .polaroid .ph.empty::after { content: "здесь будет фото"; font-family: "Marck Script", cursive; font-size: 24px; color: #8a6a5a; }
-  .polaroid .ph.empty img { display: none; }
-  .card p { margin-top: 22px; text-align: center; font-family: "Marck Script", cursive; font-size: clamp(26px, 7vw, 32px); line-height: 1.35; color: var(--cream); padding: 0 6px; }
-  .gallery-title { text-align: center; margin: 8px 0 36px; }
-  .gallery-title h3 { font-family: "Marck Script", cursive; font-weight: 400; font-size: clamp(30px, 8.5vw, 42px); line-height: 1.25; }
-  .gallery-title span { display: block; color: rgba(243,227,207,.6); font-size: 14px; margin-top: 6px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 16px; align-items: start; margin-bottom: 72px; }
-  .grid .tile:nth-child(odd) { margin-top: 0; }
-  .grid .tile.shift { margin-top: 30px; }
-  .tile { background: var(--paper); padding: 7px 7px 10px; border-radius: 3px; box-shadow: 0 10px 26px rgba(0,0,0,.5); opacity: 0; transform: translateY(26px) rotate(var(--r, 0deg)); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); cursor: zoom-in; border: 0; padding-bottom: 10px; }
-  .tile.in { opacity: 1; transform: rotate(var(--r, 0deg)); }
-  .tile img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 1px; background: #e6d6c0; }
-  .tile:active { transform: rotate(var(--r, 0deg)) scale(.97); }
-  .interlude { grid-column: 1 / -1; text-align: center; font-family: "Marck Script", cursive; font-size: clamp(24px, 6.8vw, 30px); line-height: 1.35; color: var(--cream); padding: 22px 8px; opacity: 0; transition: opacity 1.2s ease; }
-  .interlude.in { opacity: 1; }
-  .lightbox { position: fixed; inset: 0; z-index: 9; display: flex; align-items: center; justify-content: center; background: rgba(12,2,4,.92); opacity: 0; pointer-events: none; transition: opacity .35s ease; padding: 20px; cursor: zoom-out; }
-  .lightbox.show { opacity: 1; pointer-events: auto; }
-  .lightbox img { max-width: 100%; max-height: 100%; border-radius: 4px; box-shadow: 0 20px 60px rgba(0,0,0,.7); transform: scale(.94); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
-  .lightbox.show img { transform: none; }
-  .finale { text-align: center; padding-top: 16px; }
-  .finale .heart { width: 54px; height: 54px; fill: #e8493f; animation: beat 1.6s ease-in-out infinite; }
-  .finale p { font-family: "Marck Script", cursive; font-size: clamp(30px, 8vw, 40px); line-height: 1.35; margin: 18px 0 8px; }
-  .finale small { display: block; color: rgba(243,227,207,.6); font-size: 15px; }
+
+  /* ---------- просмотр по одному фото ---------- */
+  .viewer { position: absolute; inset: 0; max-width: 520px; margin: 0 auto; overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; cursor: pointer; }
+  .viewer .top { position: absolute; left: 0; right: 0; top: 0; z-index: 5; padding: max(16px, env(safe-area-inset-top)) 18px 0; display: flex; align-items: center; gap: 12px; pointer-events: none; }
+  .viewer .bar { flex: 1; height: 3px; background: rgba(255,255,255,.22); border-radius: 2px; overflow: hidden; }
+  .viewer .bar i { display: block; height: 100%; width: 0; background: #fff; border-radius: 2px; }
+  .viewer .count { font: 500 12px Manrope, system-ui, sans-serif; color: rgba(255,255,255,.7); font-variant-numeric: tabular-nums; }
+  #stage { position: absolute; inset: 0; }
+  .slide { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 22px 48px; opacity: 0; transition: opacity 1s ease; pointer-events: none; }
+  .slide.active { opacity: 1; }
+  .slide .bg { position: absolute; inset: -12%; z-index: -1; background: center / cover no-repeat; filter: blur(36px) brightness(.4) saturate(1.2); }
+  .slide .frame { margin: 0; background: var(--paper); padding: 10px 10px 16px; border-radius: 4px; box-shadow: 0 24px 60px rgba(0,0,0,.6); transform: translateY(24px) rotate(var(--r, -1.2deg)) scale(.95); transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
+  .slide.active .frame { transform: rotate(var(--r, -1.2deg)); }
+  .slide .ph { overflow: hidden; border-radius: 2px; background: #e6d6c0; }
+  .slide .ph img { display: block; width: auto; height: auto; max-width: min(calc(100vw - 64px), 400px); max-height: 56vh; }
+  .slide.active .ph img { animation: kb var(--dur, 6000ms) ease-out forwards; }
+  .viewer.paused .slide.active .ph img { animation-play-state: paused; }
+  .slide .cap { margin: 26px 0 0; text-align: center; font-family: "Marck Script", cursive; font-size: clamp(26px, 7.4vw, 34px); line-height: 1.35; max-width: 380px; min-height: 2.7em; color: var(--cream); text-shadow: 0 2px 12px rgba(0,0,0,.65); opacity: 0; transform: translateY(10px); transition: opacity 1s ease .5s, transform 1s ease .5s; }
+  .slide.active .cap { opacity: 1; transform: none; }
+  .slide.finale { text-align: center; }
+  .slide.finale .heart { width: 64px; height: 64px; fill: #e8493f; animation: beat 1.6s ease-in-out infinite; }
+  .slide.finale p { font-family: "Marck Script", cursive; font-size: clamp(34px, 9vw, 46px); line-height: 1.3; margin: 22px 0 8px; }
+  .slide.finale small { display: block; color: rgba(243,227,207,.65); font-size: 16px; margin-bottom: 34px; }
+  .slide.finale.active { pointer-events: auto; }
+  .again { border: 0; background: rgba(243,227,207,.14); color: var(--cream); font: 500 15px Manrope, system-ui, sans-serif; padding: 12px 28px; border-radius: 999px; cursor: pointer; border: .5px solid rgba(243,227,207,.35); }
+  .tap-hint { position: absolute; left: 0; right: 0; bottom: max(24px, env(safe-area-inset-bottom)); text-align: center; font-size: 13px; color: rgba(255,255,255,.7); z-index: 5; transition: opacity 1s ease; pointer-events: none; }
+  .tap-hint.hide { opacity: 0; }
+  @keyframes kb { from { transform: scale(1); } to { transform: scale(1.07); } }
   @keyframes hop { 0%, 55%, 100% { transform: translateY(0); } 65% { transform: translateY(-6px); } 75% { transform: translateY(0); } 83% { transform: translateY(-3px); } }
   @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.14); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
 
@@ -232,25 +227,12 @@
 </section>
 
 <section class="story" id="story" aria-label="Для Айганым">
-  <div class="wrap">
-    <h2>Айганым</h2>
-    <p class="lead">Я не мастер говорить по телефону, поэтому собрал для тебя вот это. Листай вниз.</p>
-    <span class="scroll-hint" aria-hidden="true">↓</span>
-    <div id="cards"></div>
-    <div class="gallery-title">
-      <h3>А это всё ты</h3>
-      <span>нажми на фото, чтобы рассмотреть</span>
-    </div>
-    <div class="grid" id="grid"></div>
-    <div class="finale card" id="finale">
-      <svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.7 1.1 5.6 3.3C13.9 6.1 15.6 5 17.6 5 21 5 23.1 8.4 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>
-      <p>Спасибо, что ты есть.</p>
-      <small>Твой Ruslan</small>
-    </div>
+  <div class="viewer" id="viewer">
+    <div class="top"><div class="bar"><i id="barFill"></i></div><span class="count" id="count"></span></div>
+    <div id="stage"></div>
+    <div class="tap-hint" id="tapHint">нажми, чтобы листать · удерживай, чтобы остановить</div>
   </div>
 </section>
-
-<div class="lightbox" id="lightbox" role="dialog" aria-label="Фото крупно"><img id="lightboxImg" alt=""></div>
 
 <audio id="ringtone" src="assets/ringtone.mp3" loop preload="auto"></audio>
 <audio id="voice" src="assets/voice.mp3" preload="auto"></audio>
@@ -304,51 +286,119 @@
   const note = t => { const n = $('callNote'); n.textContent = t; n.classList.add('show'); setTimeout(() => n.classList.remove('show'), 2200); };
   $('decline').onclick = () => note('Не сбрасывай, пожалуйста…');
 
-  /* ФОТО И КОМПЛИМЕНТЫ: правь этот список. Фото клади в assets/photos/ */
-  const MOMENTS = [
+  /* ПРОСМОТР ПО ОДНОМУ. Правь списки: порядок, подписи и время показа (мс). */
+  const FEATURED = [
     { photo: 'assets/photos/1.jpg', text: 'Ты танцуешь, а я смотрю и не могу отвести глаз.' },
     { photo: 'assets/photos/2.jpg', text: 'Даже когда ты просто задумалась, ты красивее всех.' },
     { photo: 'assets/photos/3.jpg', text: 'Идёшь вперёд так легко, что хочется идти за тобой куда угодно.' },
-    { photo: 'assets/photos/4.jpg', text: 'Цветы рядом с тобой выглядят лишь украшением, а главная красота здесь ты.' },
+    { photo: 'assets/photos/4.jpg', text: 'Цветы рядом с тобой лишь украшение, а главная красота здесь ты.' },
     { photo: 'assets/photos/5.jpg', text: 'С тобой любой день похож на лето и на маленькое приключение.' },
   ];
-  const cardsEl = $('cards');
-  MOMENTS.forEach((m, i) => {
-    const el = document.createElement('figure');
-    el.className = 'card';
-    el.style.setProperty('--r', (i % 2 ? 1.6 : -1.6) + 'deg');
-    el.innerHTML = '<div class="polaroid"><div class="ph"><img alt=""></div></div><p></p>';
-    const ph = el.querySelector('.ph'), img = el.querySelector('img');
-    img.onerror = () => ph.classList.add('empty');
-    img.src = m.photo;
-    el.querySelector('p').textContent = m.text;
-    cardsEl.appendChild(el);
-  });
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { root: $('story'), threshold: .25 });
-  document.querySelectorAll('.card').forEach(c => io.observe(c));
-
-
-  /* СЕТКА ФОТО: файлы лежат в assets/aiya/01.jpg … 27.jpg. Три из них уже есть в больших карточках выше */
+  /* assets/aiya/NN.jpg (27 штук); 08, 09, 10 пропущены, они уже есть выше */
   const SKIP = new Set([8, 9, 10]);
-  const INTERLUDES = { 6: 'Ты красиво выглядишь в любой точке мира.', 14: 'И на море, и в горах, и просто в городе.', 21: 'Мне повезло смотреть на всё это вживую.' };
-  const gridEl = $('grid'), lb = $('lightbox'), lbImg = $('lightboxImg');
-  let shown = 0;
-  for (let n = 1; n <= 27; n++) {
-    if (SKIP.has(n)) continue;
-    if (INTERLUDES[shown]) { const t = document.createElement('div'); t.className = 'interlude'; t.textContent = INTERLUDES[shown]; gridEl.appendChild(t); }
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'tile' + (shown % 2 ? ' shift' : '');
-    b.style.setProperty('--r', ((shown * 7) % 5 - 2) * .9 + 'deg');
-    const f = 'assets/aiya/' + String(n).padStart(2, '0') + '.jpg';
-    b.innerHTML = '<img loading="lazy" alt="Айганым">';
-    b.firstChild.src = f;
-    b.onclick = () => { lbImg.src = f; lb.classList.add('show'); };
-    gridEl.appendChild(b);
-    shown++;
+  const CAPTIONS = {
+    1: 'Ты как произведение искусства среди картин.',
+    2: 'Играешь с камерой так, будто она тебя обожает.',
+    3: 'Рядом с тобой даже бамбуковый лес похож на сказку.',
+    4: 'Лето тебе идёт.',
+    5: 'В тот вечер ты светилась ярче всех огней.',
+    6: 'Элегантность это про тебя.',
+    7: 'Солнце рядом с тобой греет ещё теплее.',
+    11: 'Рядом с тобой хочется взлететь.',
+    12: 'Ты и море. Идеальная пара.',
+    13: 'Свободная, как ветер. Такой я тебя и люблю.',
+    14: 'Улыбка, от которой становится теплее.',
+    15: 'Жара, пляж, и всё равно ты самая яркая.',
+    16: 'Если лететь, то только с тобой.',
+    17: 'С тобой даже зима как сказка.',
+    18: 'Горы красивые, но ты красивее.',
+    19: 'Твоё спокойное «ты» мой любимый кадр.',
+    20: 'Тёплая в любой мороз.',
+    21: 'Стиль у тебя на отдельную выставку.',
+    22: 'Вот этот взгляд, из-за которого я теряю слова.',
+    23: 'В огнях гирлянд ты лучше любых огней.',
+    24: 'Среди маков ты самый красивый цветок.',
+    25: 'Даже в шлеме и в снегу ты милая.',
+    26: 'Лёд, горы и ты. Как открытка.',
+    27: 'Я бы смотрел на этот вид с тобой всю жизнь.',
+  };
+  const SLIDES = FEATURED.map(m => ({ ...m, dur: 7500 }));
+  for (let n = 1; n <= 27; n++) if (!SKIP.has(n)) SLIDES.push({ photo: 'assets/aiya/' + String(n).padStart(2, '0') + '.jpg', text: CAPTIONS[n] || '', dur: 6000 });
+  SLIDES.push({ finale: true });
+
+  const stage = $('stage'), viewer = $('viewer'), barFill = $('barFill'), countEl = $('count'), tapHint = $('tapHint');
+  const els = SLIDES.map((m, i) => {
+    const el = document.createElement('div');
+    el.className = 'slide';
+    if (m.finale) {
+      el.classList.add('finale');
+      el.innerHTML = '<svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.700 1.100 5.600 3.300C13.900 6.100 15.600 5 17.600 5 21 5 23.100 8.400 21.600 11.800 19.500 16.400 12 21 12 21z"/></svg><p>Спасибо, что ты есть.</p><small>Твой Ruslan</small><button class="again" type="button">Посмотреть ещё раз</button>';
+      el.querySelector('.again').addEventListener('click', () => goTo(0));
+    } else {
+      el.innerHTML = '<div class="bg"></div><figure class="frame"><div class="ph"><img alt="Айганым"></div></figure><p class="cap"></p>';
+      el.querySelector('.bg').style.backgroundImage = 'url(' + m.photo + ')';
+      el.querySelector('img').src = m.photo;
+      el.querySelector('.cap').textContent = m.text;
+      el.querySelector('.frame').style.setProperty('--r', ((i % 3) - 1) * 1.3 + 'deg');
+      el.style.setProperty('--dur', (m.dur + 800) + 'ms');
+    }
+    stage.appendChild(el);
+    return el;
+  });
+
+  let idx = -1, elapsed = 0, paused = false, lastT = 0, raf = 0;
+  function goTo(i) {
+    i = Math.max(0, Math.min(SLIDES.length - 1, i));
+    els.forEach((e, k) => e.classList.toggle('active', k === i));
+    idx = i; elapsed = 0;
+    const fin = !!SLIDES[i].finale;
+    barFill.style.width = fin ? '100%' : '0%';
+    countEl.textContent = fin ? '' : (i + 1) + ' / ' + (SLIDES.length - 1);
+    for (let k = i + 1; k <= i + 2 && k < SLIDES.length; k++) if (SLIDES[k].photo) new Image().src = SLIDES[k].photo;
   }
-  lb.onclick = () => lb.classList.remove('show');
-  addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('show'); });
-  document.querySelectorAll('.tile, .interlude').forEach(el => io.observe(el));
+  function viewTick(t) {
+    const dt = Math.min(100, t - lastT); lastT = t;
+    const m = SLIDES[idx];
+    if (m && !m.finale && !paused) {
+      elapsed += dt;
+      barFill.style.width = Math.min(100, elapsed / m.dur * 100) + '%';
+      if (elapsed >= m.dur) goTo(idx + 1);
+    }
+    raf = requestAnimationFrame(viewTick);
+  }
+  function startViewer() {
+    cancelAnimationFrame(raf);
+    paused = false; viewer.classList.remove('paused');
+    tapHint.classList.remove('hide');
+    setTimeout(() => tapHint.classList.add('hide'), 5000);
+    goTo(0);
+    lastT = performance.now();
+    raf = requestAnimationFrame(viewTick);
+  }
+
+  /* нажатие: вперёд или назад, удержание: пауза */
+  let holdTimer = 0, held = false;
+  viewer.addEventListener('pointerdown', e => {
+    if (e.target.closest('button')) return;
+    held = false;
+    holdTimer = setTimeout(() => { held = true; paused = true; viewer.classList.add('paused'); }, 220);
+  });
+  const release = e => {
+    clearTimeout(holdTimer);
+    if (e.target.closest && e.target.closest('button')) return;
+    if (held) { held = false; paused = false; viewer.classList.remove('paused'); return; }
+    if (e.type === 'pointercancel') return;
+    const r = viewer.getBoundingClientRect();
+    if (e.clientX - r.left < r.width * .3) goTo(idx - 1); else goTo(idx + 1);
+    tapHint.classList.add('hide');
+  };
+  viewer.addEventListener('pointerup', release);
+  viewer.addEventListener('pointercancel', release);
+  viewer.addEventListener('contextmenu', e => e.preventDefault());
+  addEventListener('keydown', e => {
+    if (!$('story').classList.contains('show')) return;
+    if (e.key === 'ArrowRight') goTo(idx + 1); else if (e.key === 'ArrowLeft') goTo(idx - 1);
+  });
 
   /* разговор начался: реальный таймер */
   let t0 = 0, tick = null;
@@ -400,7 +450,7 @@
     const st = $('story');
     st.style.setProperty('--cx', (r.left + r.width / 2) + 'px');
     st.style.setProperty('--cy', (r.top + r.height / 2) + 'px');
-    st.scrollTop = 0;
+    startViewer();
     requestAnimationFrame(() => st.classList.add('show'));
     setTimeout(() => $('phone').classList.remove('show'), 1400);
   };
