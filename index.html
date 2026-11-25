@@ -349,6 +349,8 @@
   };
   const SLIDES = FEATURED.map(m => ({ ...m }));
   for (let n = 1; n <= 27; n++) if (!SKIP.has(n)) SLIDES.push({ photo: 'assets/aiya/' + String(n).padStart(2, '0') + '.jpg', text: CAPTIONS[n] || '' });
+  /* фото перемешиваются при каждом открытии страницы, подпись едет вместе со своим фото */
+  for (let i = SLIDES.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [SLIDES[i], SLIDES[j]] = [SLIDES[j], SLIDES[i]]; }
   SLIDES.push({ finale: true });
 
   const stage = $('stage'), viewer = $('viewer'), barFill = $('barFill'), countEl = $('count'), tapHint = $('tapHint');
